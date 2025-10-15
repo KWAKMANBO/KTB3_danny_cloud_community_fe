@@ -10,5 +10,9 @@ app.use(express.static(path.join(__dirname, 'src')));
 
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src','page', 'login.html'));
+    res.sendFile(path.join(__dirname, 'src', 'page', 'login.html'));
+})
+
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'page', 'signup.html'));
 })
