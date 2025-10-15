@@ -16,3 +16,7 @@ app.get('/', (req, res) => {
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'signup.html'));
 })
+
+app.get('/posts', (req,res) =>{
+    res.sendFile(path.join(__dirname, 'src', 'page', 'posts.html'));
+})
