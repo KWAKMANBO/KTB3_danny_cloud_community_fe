@@ -13,11 +13,7 @@ body {
 
 
 
-h1 {
-    font-size: 18px;
-    color: #333;
-    font-weight: 400;
-}
+
 
 main {
     flex: 1;
@@ -34,7 +30,7 @@ main {
 
 h2 {
     text-align: center;
-    font-size: 16px;
+    font-size: 2rem;
     color: #333;
     font-weight: 600;
     margin-bottom: 20px;
@@ -92,11 +88,11 @@ input::placeholder {
 .login-btn {
 
     width: 80%;
-    padding: 12px;
-    background-color: #7b9fc4;
+    padding: 0.5rem;
+    background-color:#aca0eb;
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     font-size: 14px;
     font-weight: 600;
     display: block;
@@ -106,7 +102,7 @@ input::placeholder {
 }
 
 .login-btn:hover {
-    background-color: #6a8db0;
+    background-color: #705e79;
 }
 
 .signup-btn {
