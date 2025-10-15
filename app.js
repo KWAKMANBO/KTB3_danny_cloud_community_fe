@@ -17,6 +17,11 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'signup.html'));
 })
 
-app.get('/posts', (req,res) =>{
+app.get('/posts', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'posts.html'));
+})
+
+// 추후 상세한 아이디로 변경하기
+app.get('/posts/id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'page', 'postDetail.html'));
 })

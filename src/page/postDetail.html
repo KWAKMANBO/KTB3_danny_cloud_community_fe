@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아무말 대잔치 - 게시물 상세</title>
+    <link rel="stylesheet" href="/css/PostDetail.css">
+    <link rel="stylesheet" href="/css/Header.css">
+    <link rel="stylesheet" href="/css/BackButton.css">
+</head>
+<body>
+<header>
+</header>
+
+<main>
+    <div class="post-container">
+        <!-- 게시물 헤더 -->
+        <div class="post-header">
+            <h2 class="post-title">제목 1</h2>
+            <div class="post-meta">
+                <div class="author-info">
+                    <div class="author-profile"></div>
+                    <span class="author-name">더미 닉네임 1</span>
+                    <span class="post-date">2021-01-01 00:00:00</span>
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn">수정</button>
+                    <button class="action-btn">삭제</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 게시물 이미지 -->
+        <div class="post-image">
+            <div class="image-placeholder"></div>
+        </div>
+
+        <!-- 게시물 내용 -->
+        <div class="post-content">
+            <p> 게시물 내용입니다.</p>
+        </div>
+
+        <!-- 좋아요/조회수/댓글 수 -->
+        <div class="post-stats">
+            <div class="stat-item">
+                <div class="stat-number">123</div>
+                <div class="stat-label">좋아요수</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">123</div>
+                <div class="stat-label">조회수</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">123</div>
+                <div class="stat-label">댓글</div>
+            </div>
+        </div>
+
+        <!-- 댓글 입력 -->
+        <div class="comment-write">
+            <textarea id="comment-input" placeholder="댓글을 남겨주세요!"></textarea>
+            <button class="comment-submit-btn">댓글 등록</button>
+        </div>
+
+        <!-- 댓글 목록 -->
+        <div class="comment-list">
+            <div class="comment-item">
+                <div class="comment-header">
+                    <div class="comment-author">
+                        <div class="author-profile small"></div>
+                        <span class="author-name">더미 닉네임 1</span>
+                        <span class="comment-date">2021-01-01 00:00:00</span>
+                    </div>
+                    <div class="comment-actions">
+                        <button class="action-btn">수정</button>
+                        <button class="action-btn">삭제</button>
+                    </div>
+                </div>
+                <div class="comment-content">댓글 내용</div>
+            </div>
+        </div>
+    </div>
+</main>
+    <script src = "/page/component/common/HeaderWithBackBtnComponent.js"></script>
+</body>
+</html>
