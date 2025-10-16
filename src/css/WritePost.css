@@ -126,7 +126,7 @@ textarea::placeholder {
 }
 
 .submit-btn:hover {
-    background-color: #705e79;
+    background-color: #7e6aee;
 }
 
 @media (max-width: 768px) {
