@@ -25,3 +25,8 @@ app.get('/posts', (req, res) => {
 app.get('/posts/id', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'postDetail.html'));
 })
+
+// 추후 상세한 아이디로 변경하기
+app.get('/post', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'page', 'writePost.html'));
+})
