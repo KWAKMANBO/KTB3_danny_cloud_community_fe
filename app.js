@@ -38,3 +38,7 @@ app.get('/post/correction', (req, res) => {
 app.get('/profile', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'profile.html'));
 })
+
+app.get('/profile/password', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'page', 'password.html'));
+})
