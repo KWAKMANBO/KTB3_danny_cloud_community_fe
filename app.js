@@ -34,3 +34,7 @@ app.get('/post', (req, res) => {
 app.get('/post/correction', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'modifyPost.html'));
 })
+
+app.get('/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'page', 'profile.html'));
+})
