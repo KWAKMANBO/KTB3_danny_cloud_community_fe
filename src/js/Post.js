@@ -60,7 +60,7 @@ const handleScroll = () => {
 postList.addEventListener('click', (e) => {
    // 클릭된 요소가 post-card 또는 그 자식 요소인지 확인
    const postCard = e.target.closest('.post-card');
-
+    console.log(postCard)
    if (postCard) {
       const postId = postCard.dataset.postId;
 

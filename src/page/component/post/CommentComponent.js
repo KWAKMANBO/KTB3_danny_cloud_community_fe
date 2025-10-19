@@ -1,14 +1,16 @@
-const commentComponent = '<div class="comment-item">\n' +
-    '                <div class="comment-header">\n' +
-    '                    <div class="comment-author">\n' +
-    '                        <div class="author-profile small"></div>\n' +
-    '                        <span class="author-name">더미 닉네임 1</span>\n' +
-    '                        <span class="comment-date">2021-01-01 00:00:00</span>\n' +
-    '                    </div>\n' +
-    '                    <div class="comment-actions">\n' +
-    '                        <button class="action-btn">수정</button>\n' +
-    '                        <button class="action-btn">삭제</button>\n' +
-    '                    </div>\n' +
-    '                </div>\n' +
-    '                <div class="comment-content">댓글 내용</div>\n' +
-    '            </div>';
+export const commentComponent = (comment) => {
+    return `<div class="comment-item" data-comment-id="${comment.id}">
+                <div class="comment-header">
+                    <div class="comment-author">
+                        <div class="author-profile small"></div>
+                        <span class="author-name">${comment.author}</span>
+                        <span class="comment-date">${comment.createAt}</span>
+                    </div>
+                    <div class="comment-actions">
+                        <button class="action-btn">수정</button>
+                        <button class="action-btn">삭제</button>
+                    </div>
+                </div>
+                <div class="comment-content">${comment.content}</div>
+            </div>`;
+};
