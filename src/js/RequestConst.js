@@ -27,14 +27,14 @@ export const post = async (url, data) => {
     }
 }
 
-export const get = async (url, data) => {
+export const get = async (url, params = {}) => {
     try {
-        const response = await fetch(url, {
+        const queryString = new URLSearchParams(params).toString();
+        const fullUrl = queryString ? `${url}?${queryString}` : url;
+
+        const response = await fetch(fullUrl, {
             method: METHOD.GET,
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
         });
 
         if (!response.ok) {
@@ -42,7 +42,8 @@ export const get = async (url, data) => {
         }
         return await response.json();
     } catch (error) {
-        console.error("POST 요청 실패:", error);
+        console.error("GET 요청 실패:", error);
         return null;
     }
 }
+

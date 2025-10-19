@@ -10,14 +10,14 @@ loginButton.addEventListener('click', async () => {
 });
 
 const login = async (email, password) => {
-    const result = await post("http://localhost:8080/auth/login", {
+    const response = await post("http://localhost:8080/auth/login", {
         email: email,
         password: password
     })
 
 
-    if (result) {
-        localStorage.setItem("accessToken", result.data.access_token);
+    if (response) {
+        localStorage.setItem("accessToken", response.data.access_token);
         window.location.href = "http://localhost:3000/posts";
     } else {
         alert('로그인에 실패했습니다.');
