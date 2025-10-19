@@ -1,18 +1,20 @@
-const postComponent = '<article class="post-card">\n' +
-    '            <div class="post-card-header">\n' +
-    '                <h3 class="post-title">제목 1</h3>\n' +
-    '                <div class="post-info">\n' +
-    '                    <span class="info-item">좋아요 0</span>\n' +
-    '                    <span class="info-item">댓글 0</span>\n' +
-    '                    <span class="info-item">조회수 0</span>\n' +
-    '                    <span class="post-date">2021-01-01 00:00:00</span>\n' +
-    '                </div>\n' +
-    '            </div>\n' +
-    '            <div class="post-card-footer">\n' +
-    '                <div class="author-profile"></div>\n' +
-    '                <span class="author-name">더미 닉네임 1</span>\n' +
-    '            </div>\n' +
-    '        </article>';
+export const postComponent = (data) => {
+    return `<article class="post-card" data-post-id="${data.id}">
+            <div class="post-card-header">
+                <h3 class="post-title">${data.title}</h3>
+                <div class="post-info">
+                    <span class="info-item">좋아요 ${data.likes}</span>
+                    <span class="info-item">댓글 ${data.comments}</span>
+                    <span class="info-item">조회수 ${data.views}</span>
+                    <span class="post-date">${data.createAt}</span>
+                </div>
+            </div>
+            <div class="post-card-footer">
+                <div class="author-profile"></div>
+                <span class="author-name">${data.author}</span>
+            </div>
+        </article>`;
+};
 
-const p = document.querySelector('.post-list')
-p.innerHTML = postComponent;
+
+

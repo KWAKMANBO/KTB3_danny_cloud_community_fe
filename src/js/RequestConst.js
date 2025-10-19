@@ -8,12 +8,20 @@ const METHOD = {
 
 export const post = async (url, data) => {
     try {
+        const headers = {
+            "Content-Type": "application/json",
+        };
+
+        // localStorage에서 accessToken 가져오기
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+
         const response = await fetch(url, {
             method: METHOD.POST,
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: headers,
             body: JSON.stringify(data)
         });
 
@@ -32,9 +40,18 @@ export const get = async (url, params = {}) => {
         const queryString = new URLSearchParams(params).toString();
         const fullUrl = queryString ? `${url}?${queryString}` : url;
 
+        const headers = {};
+
+        // localStorage에서 accessToken 가져오기
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+
         const response = await fetch(fullUrl, {
             method: METHOD.GET,
             credentials: "include",
+            headers: headers,
         });
 
         if (!response.ok) {
