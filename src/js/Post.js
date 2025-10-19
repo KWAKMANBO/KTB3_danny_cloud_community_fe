@@ -19,7 +19,6 @@ const loadPosts = async (cursor = null) => {
 
    if (response && response.data) {
       const { posts, next_cursor, has_next } = response.data;
-      console.log('로드된 게시물:', posts.length, '개');
 
       // 각 게시물을 postComponent로 변환하여 HTML 생성
       const html = posts.map(post => postComponent(post)).join('');
@@ -57,6 +56,19 @@ const handleScroll = () => {
    }
 };
 
+// 게시물 클릭 이벤트 (이벤트 위임)
+postList.addEventListener('click', (e) => {
+   // 클릭된 요소가 post-card 또는 그 자식 요소인지 확인
+   const postCard = e.target.closest('.post-card');
+
+   if (postCard) {
+      const postId = postCard.dataset.postId;
+
+      // 게시물 상세 페이지로 이동 (경로변수 방식)
+      window.location.href = `/post/${postId}`;
+   }
+});
+
 // 초기 로드
 window.addEventListener('load', async () => {
    await loadPosts();
@@ -64,3 +76,4 @@ window.addEventListener('load', async () => {
 
 // 스크롤 이벤트 등록
 window.addEventListener('scroll', handleScroll);
+

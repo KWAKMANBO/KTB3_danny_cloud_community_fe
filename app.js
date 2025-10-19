@@ -21,18 +21,21 @@ app.get('/posts', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'posts.html'));
 })
 
-// 추후 상세한 아이디로 변경하기
-app.get('/posts/id', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'page', 'postDetail.html'));
-})
-
-
+// 게시글 작성 페이지
 app.get('/post', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'writePost.html'));
 })
 
+// 게시글 수정 페이지 (구체적인 경로를 먼저)
 app.get('/post/correction', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'page', 'modifyPost.html'));
+})
+
+// 게시물 상세 페이지 (경로변수는 마지막에)
+app.get('/post/:id', (req, res) => {
+    const postId = req.params.id;
+    console.log('요청된 게시물 ID:', postId);
+    res.sendFile(path.join(__dirname, 'src', 'page', 'postDetail.html'));
 })
 
 app.get('/profile', (req, res) => {
