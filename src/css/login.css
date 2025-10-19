@@ -65,7 +65,7 @@ input::placeholder {
 }
 
 .helper-text {
-    #visibility: hidden;
+    visibility: hidden;
     margin-top: 4px;
     font-size: 11px;
     color: #ff6b6b;
