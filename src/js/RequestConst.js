@@ -26,3 +26,23 @@ export const post = async (url, data) => {
         return null;
     }
 }
+
+export const get = async (url, data) => {
+    try {
+        const response = await fetch(url, {
+            method: METHOD.GET,
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("POST 요청 실패:", error);
+        return null;
+    }
+}
