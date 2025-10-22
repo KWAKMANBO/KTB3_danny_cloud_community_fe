@@ -4,8 +4,6 @@ const loginButton = document.querySelector('.login-btn');
 loginButton.addEventListener('click', async () => {
     const email = document.querySelector('#email').value;
     const password = document.querySelector('#password').value;
-    console.log(email);
-    console.log(password);
     await login(email, password);
 });
 

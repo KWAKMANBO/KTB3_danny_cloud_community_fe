@@ -34,7 +34,6 @@ app.get('/post/correction', (req, res) => {
 // 게시물 상세 페이지 (경로변수는 마지막에)
 app.get('/post/:id', (req, res) => {
     const postId = req.params.id;
-    console.log('요청된 게시물 ID:', postId);
     res.sendFile(path.join(__dirname, 'src', 'page', 'postDetail.html'));
 })
 
