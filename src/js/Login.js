@@ -1,5 +1,6 @@
 import {post} from './RequestConst.js';
 
+
 const loginButton = document.querySelector('.login-btn');
 loginButton.addEventListener('click', async () => {
     const email = document.querySelector('#email').value;
@@ -16,7 +17,8 @@ const login = async (email, password) => {
 
     if (response) {
         localStorage.setItem("accessToken", response.data.access_token);
-        window.location.href = "http://localhost:3000/posts";
+        window.location.replace("http://localhost:3000/posts");
+
     } else {
         alert('로그인에 실패했습니다.');
     }
@@ -24,6 +26,6 @@ const login = async (email, password) => {
 
 const signUpButton = document.querySelector('.signup-btn');
 
-signUpButton.addEventListener('click', async () =>{
+signUpButton.addEventListener('click', async () => {
     window.location.href = "http://localhost:3000/signup";
 })
