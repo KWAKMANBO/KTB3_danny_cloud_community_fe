@@ -2,6 +2,10 @@ import {get} from './RequestConst.js';
 import {commentComponent} from '../page/component/post/CommentComponent.js';
 
 const postId = window.location.pathname.split('/')[2];
+let nextCrusor = null;
+let hasNext = true;
+let isLoading = false;
+
 
 const loadPostDetail = async () => {
 
@@ -22,18 +26,42 @@ const loadPostDetail = async () => {
 };
 
 // 댓글 목록 로드
-const loadComments = async () => {
-    const response = await get(`http://localhost:8080/posts/${postId}/comments`, {});
+const loadComments = async (cursor = null) => {
+    // loading 상태이거나 다음 댓글이 없다면 렌더링 X
+    if (isLoading || !hasNext) return;
+
+    isLoading = true;
+
+    const params = cursor ? {cursor} : {};
+    const response = await get(`http://localhost:8080/posts/${postId}/comments`, params);
 
     if (response && response.data) {
-        console.log('댓글 API 응답:', response.data);
+        console.log("응답 데이터:", response.data)
 
-        // response.data가 배열인지 객체인지 확인
-        const comments = Array.isArray(response.data) ? response.data : response.data.comments || [];
+        const {comments, next_cursor, has_next} = response.data;
 
-        renderComments(comments);
+        console.log("comments 개수:", comments?.length, "next_cursor:", next_cursor, "has_next:", has_next);
+
+        nextCrusor = next_cursor;
+        hasNext = has_next;
+        renderComments(comments || [], cursor);
     } else {
-        console.log('댓글을 불러오지 못했습니다.');
+        console.error('댓글을 불러오지 못했습니다.');
+    }
+
+    isLoading = false;
+};
+
+// 스크롤 이벤트 리스너
+const handleScroll = () => {
+    // 스크롤이 하단에 가까워지면 다음 페이지 로드
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    // 하단에서 300px 이내에 도달하면 로드
+    if (scrollTop + windowHeight >= documentHeight - 300) {
+        loadComments(nextCrusor)
     }
 };
 
@@ -51,19 +79,26 @@ const renderPostDetail = (post) => {
 };
 
 // 댓글 목록 렌더링
-const renderComments = (comments) => {
+const renderComments = (comments, cursor = null) => {
     const commentList = document.querySelector('.comment-list');
 
-    if (comments.length === 0) {
+    if (comments.length === 0 && !cursor) {
         commentList.innerHTML = '<p>댓글이 없습니다.</p>';
         return;
     }
-
-    // 각 댓글을 commentComponent로 변환하여 HTML 생성
     const html = comments.map(comment => commentComponent(comment)).join('');
-    commentList.innerHTML = html;
+    if (!cursor) {
+        // 각 댓글을 commentComponent로 변환하여 HTML 생성
+        commentList.innerHTML = html;
+    } else {
+        const html = comments.map(comment => commentComponent(comment)).join('');
+        commentList.insertAdjacentHTML('beforeend', html);
+    }
+
 
 };
+
+window.addEventListener('scroll', handleScroll);
 
 window.addEventListener('load', async () => {
     await loadPostDetail();
