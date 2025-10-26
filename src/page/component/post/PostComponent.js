@@ -1,3 +1,5 @@
+import {getDate} from "../../../js/Common.js";
+
 export const postComponent = (data) => {
     return `<article class="post-card" data-post-id="${data.id}">
             <div class="post-card-header">
@@ -6,7 +8,7 @@ export const postComponent = (data) => {
                     <span class="info-item">좋아요 ${data.likes}</span>
                     <span class="info-item">댓글 ${data.comments}</span>
                     <span class="info-item">조회수 ${data.views}</span>
-                    <span class="post-date">${data.createAt}</span>
+                    <span class="post-date">${getDate(data.created_at)}</span>
                 </div>
             </div>
             <div class="post-card-footer">

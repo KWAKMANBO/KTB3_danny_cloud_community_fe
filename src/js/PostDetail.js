@@ -1,5 +1,6 @@
 import {get} from './RequestConst.js';
 import {commentComponent} from '../page/component/post/CommentComponent.js';
+import {getDate} from "./Common.js";
 
 const postId = window.location.pathname.split('/')[2];
 let nextCrusor = null;
@@ -36,11 +37,8 @@ const loadComments = async (cursor = null) => {
     const response = await get(`http://localhost:8080/posts/${postId}/comments`, params);
 
     if (response && response.data) {
-        console.log("응답 데이터:", response.data)
 
         const {comments, next_cursor, has_next} = response.data;
-
-        console.log("comments 개수:", comments?.length, "next_cursor:", next_cursor, "has_next:", has_next);
 
         nextCrusor = next_cursor;
         hasNext = has_next;
@@ -67,9 +65,11 @@ const handleScroll = () => {
 
 // 게시물 상세 정보 렌더링
 const renderPostDetail = (post) => {
+    console.log(post);
     document.querySelector('.post-title').textContent = post.title;
     document.querySelector('.author-name').textContent = post.author;
-    document.querySelector('.post-date').textContent = post.createAt;
+
+    document.querySelector('.post-date').textContent = getDate(post.created_at);
     document.querySelector('.post-content p').textContent = post.content;
 
     const statNumbers = document.querySelectorAll('.stat-number');

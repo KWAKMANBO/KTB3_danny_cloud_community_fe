@@ -119,11 +119,10 @@ signUpSubmitButton.addEventListener('click', async () => {
             // 회원가입 성공
             console.log('회원가입 성공:', result);
             alert('회원가입이 완료되었습니다!');
-            // 로그인 페이지로 이동
-            window.location.href = "http://localhost:3000/";
+            // 로그인 페이지로 이동\
+            window.location.replace("http://localhost:3000/");
         } else {
             // 회원가입 실패
-            console.log('회원가입 실패');
             alert('회원가입에 실패했습니다. 다시 시도해주세요.');
         }
     }

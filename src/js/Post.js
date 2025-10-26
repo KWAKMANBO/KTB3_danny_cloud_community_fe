@@ -19,7 +19,7 @@ const loadPosts = async (cursor = null) => {
 
    if (response && response.data) {
       const { posts, next_cursor, has_next } = response.data;
-
+        console.log(posts)
       // 각 게시물을 postComponent로 변환하여 HTML 생성
       const html = posts.map(post => postComponent(post)).join('');
 
