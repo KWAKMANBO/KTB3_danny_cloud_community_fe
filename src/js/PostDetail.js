@@ -1,23 +1,28 @@
 import {get} from './RequestConst.js';
 import {commentComponent} from '../page/component/post/CommentComponent.js';
 import {getDate} from "./Common.js";
+import {API, PAGE} from './const/ConstUrl.js';
 
 const postId = window.location.pathname.split('/')[2];
 let nextCrusor = null;
 let hasNext = true;
 let isLoading = false;
 
+const backButton = document.querySelector(".back-btn")
+backButton.addEventListener('click', () => {
+    window.location.href = PAGE.POST_LIST_PAGE;
+})
 
 const loadPostDetail = async () => {
-
     if (!postId) {
         alert("게시물을 찾을 수 없습니다.");
         return;
     }
 
-    const response = await get(`http://localhost:8080/posts/${postId}`, {});
+    const response = await get(`${API.POST}/${postId}`, {});
 
     if (response && response.data) {
+        console.log(response.data)
         renderPostDetail(response.data);
         // 댓글 목록 로드
         await loadComments();
@@ -34,7 +39,7 @@ const loadComments = async (cursor = null) => {
     isLoading = true;
 
     const params = cursor ? {cursor} : {};
-    const response = await get(`http://localhost:8080/posts/${postId}/comments`, params);
+    const response = await get(`${API.POST}/${postId}/comments`, params);
 
     if (response && response.data) {
 
@@ -65,12 +70,13 @@ const handleScroll = () => {
 
 // 게시물 상세 정보 렌더링
 const renderPostDetail = (post) => {
-    console.log(post);
     document.querySelector('.post-title').textContent = post.title;
     document.querySelector('.author-name').textContent = post.author;
 
     document.querySelector('.post-date').textContent = getDate(post.created_at);
     document.querySelector('.post-content p').textContent = post.content;
+
+    if (!post.is_mine) document.querySelector('.post-actions').style.display = "none";
 
     const statNumbers = document.querySelectorAll('.stat-number');
     statNumbers[0].textContent = post.likes;

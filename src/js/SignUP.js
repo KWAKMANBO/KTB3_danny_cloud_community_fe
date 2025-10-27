@@ -1,17 +1,23 @@
 import {post} from './RequestConst.js';
+import {API, PAGE} from './const/ConstUrl.js';
 
 const backButton = document.querySelector(".back-btn");
 
 // 뒤로가기 버튼을 누르면 로그인 페이지로 이동 하도록 이벤트 등록
 backButton.addEventListener('click', () => {
-    window.location.href = "http://localhost:3000/";
+    window.location.href = PAGE.LOGIN_PAGE;
 })
 
 
 // 로그인하러 가기 버튼 누르면 로그인 페이지로 이동
 const loginLinkButton = document.querySelector('.login-link-btn');
 loginLinkButton.addEventListener('click', () => {
-    window.location.href = "http://localhost:3000/";
+    window.location.href = PAGE.LOGIN_PAGE;
+})
+
+const termButton = document.querySelector(".term-btn");
+termButton.addEventListener('click', () => {
+    window.location.href = API.TERM;
 })
 
 // 유효성 검사 함수들
@@ -113,14 +119,14 @@ signUpSubmitButton.addEventListener('click', async () => {
 
     // 모든 검사 통과 시 회원가입 처리
     if (isValid) {
-        const result = await post("http://localhost:8080/auth", data);
+        const result = await post(API.SIGNUP, data);
 
         if (result) {
             // 회원가입 성공
             console.log('회원가입 성공:', result);
             alert('회원가입이 완료되었습니다!');
             // 로그인 페이지로 이동\
-            window.location.replace("http://localhost:3000/");
+            window.location.replace(PAGE.LOGIN_PAGE);
         } else {
             // 회원가입 실패
             alert('회원가입에 실패했습니다. 다시 시도해주세요.');

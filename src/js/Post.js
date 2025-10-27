@@ -1,6 +1,6 @@
 import {postComponent} from "../page/component/post/PostComponent.js";
 import {get} from "./RequestConst.js";
-
+import {API, PAGE} from './const/ConstUrl.js';
 const postList = document.querySelector('.post-list');
 
 // 페이징 상태 관리
@@ -15,11 +15,10 @@ const loadPosts = async (cursor = null) => {
    isLoading = true;
 
    const params = cursor ? { cursor } : {};
-   const response = await get("http://localhost:8080/posts", params);
+   const response = await get(API.POST, params);
 
    if (response && response.data) {
       const { posts, next_cursor, has_next } = response.data;
-        console.log(posts)
       // 각 게시물을 postComponent로 변환하여 HTML 생성
       const html = posts.map(post => postComponent(post)).join('');
 
@@ -65,7 +64,7 @@ postList.addEventListener('click', (e) => {
       const postId = postCard.dataset.postId;
 
       // 게시물 상세 페이지로 이동 (경로변수 방식)
-      window.location.href = `/post/${postId}`;
+      window.location.href = `${PAGE.POST_DETAIL}/${postId}`;
    }
 });
 

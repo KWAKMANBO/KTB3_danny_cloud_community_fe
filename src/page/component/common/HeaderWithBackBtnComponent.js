@@ -1,6 +1,6 @@
 const header = document.querySelector('header');
 header.innerHTML = `
-    <button class="back-btn" onclick="history.back()"><</button>
+    <button class="back-btn""><</button>
     <h1>아무 말 대잔치</h1>
 `;
 

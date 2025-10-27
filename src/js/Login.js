@@ -1,5 +1,5 @@
 import {post} from './RequestConst.js';
-
+import {API, PAGE} from './const/ConstUrl.js';
 
 const loginButton = document.querySelector('.login-btn');
 loginButton.addEventListener('click', async () => {
@@ -9,7 +9,7 @@ loginButton.addEventListener('click', async () => {
 });
 
 const login = async (email, password) => {
-    const response = await post("http://localhost:8080/auth/login", {
+    const response = await post(API.LOGIN, {
         email: email,
         password: password
     })
@@ -17,7 +17,7 @@ const login = async (email, password) => {
 
     if (response) {
         localStorage.setItem("accessToken", response.data.access_token);
-        window.location.replace("http://localhost:3000/posts");
+        window.location.replace(PAGE.POST_LIST_PAGE);
 
     } else {
         alert('로그인에 실패했습니다.');
@@ -27,5 +27,5 @@ const login = async (email, password) => {
 const signUpButton = document.querySelector('.signup-btn');
 
 signUpButton.addEventListener('click', async () => {
-    window.location.href = "http://localhost:3000/signup";
+    window.location.href = PAGE.SIGNUP_PAGE;
 })
