@@ -1,8 +1,11 @@
 import {deleteRequest, get} from './const/RequestConst.js';
 import {commentComponent} from '../page/component/post/CommentComponent.js';
-import {getDate} from "./Common.js";
+import {getDate, requireAuth} from "./Common.js";
 import {API, PAGE} from './const/const.js';
 import {showDialog} from '../page/component/common/DialogComponent.js';
+
+// 인증 체크
+requireAuth();
 
 const postId = window.location.pathname.split('/')[2];
 let nextCursor = null;

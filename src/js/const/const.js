@@ -1,5 +1,6 @@
 export const API = {
     LOGIN: "http://localhost:8080/auth/login",
+    LOGOUT: "http://localhost:8080/auth/logout",
     SIGNUP: "http://localhost:8080/auth",
     TERM: "http://localhost:8080/auth/consent",
     POST: "http://localhost:8080/posts",
@@ -11,7 +12,9 @@ export const PAGE = {
     POST_LIST_PAGE: "http://localhost:3000/posts",
     POST_DETAIL: "http://localhost:3000/post",
     POST_WRITE_PAGE: "http://localhost:3000/post",
-    POST_MODIFY_PAGE: "http://localhost:3000/post/correction"
+    POST_MODIFY_PAGE: "http://localhost:3000/post/correction",
+    PROFILE_MODIFY_PAGE: "http://localhost:3000/profile",
+    PROFILE_MODIFY_PASSWORD_PAGE: "http://localhost:3000/profile/password"
 }
 
 export const TITLE_MAX = 30;

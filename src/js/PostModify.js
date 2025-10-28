@@ -1,5 +1,9 @@
 import {get, patch, post} from "./const/RequestConst.js";
 import {API, PAGE, TITLE_MAX, CONTENT_MAX} from "./const/const.js";
+import {requireAuth} from './Common.js';
+
+// 인증 체크
+requireAuth();
 
 const submitButton = document.querySelector(".submit-btn");
 const titleInput = document.querySelector("#title");

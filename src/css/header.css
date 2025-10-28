@@ -17,3 +17,66 @@ header h1 {
     font-weight: 400;
     color: #333;
 }
+
+/* 프로필 컨테이너 */
+.profile-container {
+    position: absolute;
+    right: 20px;
+}
+
+/* 프로필 썸네일 */
+.profile-thumbnail {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #aca0eb;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.profile-thumbnail:hover {
+    opacity: 0.8;
+}
+
+/* 프로필 드롭다운 */
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 150px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+    z-index: 100;
+}
+
+.profile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* 드롭다운 아이템 */
+.dropdown-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+    color: #333;
+}
+
+.dropdown-item:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.dropdown-item:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+}

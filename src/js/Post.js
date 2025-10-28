@@ -1,6 +1,10 @@
 import {postComponent} from "../page/component/post/PostComponent.js";
 import {get} from "./const/RequestConst.js";
 import {API, PAGE} from './const/const.js';
+import {requireAuth} from './Common.js';
+
+// 인증 체크
+requireAuth();
 
 const writeButton  = document.querySelector(".write-post-btn");
 writeButton.addEventListener('click', ()=>{
