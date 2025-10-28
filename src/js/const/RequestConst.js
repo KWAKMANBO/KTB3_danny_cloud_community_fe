@@ -91,3 +91,38 @@ export const patch = async (url, data) => {
         return null;
     }
 }
+
+// delete 함수명은 불가능 하므로 deleteRequest로 명명함
+export const deleteRequest = async (url, params = {}) => {
+
+    try {
+        const queryString = new URLSearchParams(params).toString();
+        const fullUrl = queryString ? `${url}?${queryString}` : url;
+        const headers = {};
+
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+
+        const response = await fetch(fullUrl, {
+            method: METHOD.DELETE,
+            credentials: "include",
+            headers: headers,
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // DELETE 요청은 빈 응답을 반환할 수 있음
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            return await response.json();
+        }
+        return { success: true };
+    } catch (error) {
+        console.error("DELETE 요청 실패:", error);
+        return null;
+    }
+}

@@ -1,10 +1,11 @@
-import {get} from './const/RequestConst.js';
+import {deleteRequest, get} from './const/RequestConst.js';
 import {commentComponent} from '../page/component/post/CommentComponent.js';
 import {getDate} from "./Common.js";
 import {API, PAGE} from './const/const.js';
+import {showDialog} from '../page/component/common/DialogComponent.js';
 
 const postId = window.location.pathname.split('/')[2];
-let nextCrusor = null;
+let nextCursor = null;
 let hasNext = true;
 let isLoading = false;
 
@@ -22,7 +23,6 @@ const loadPostDetail = async () => {
     const response = await get(`${API.POST}/${postId}`, {});
 
     if (response && response.data) {
-        console.log(response.data);
         renderPostDetail(response.data);
         // 댓글 목록 로드
         await loadComments();
@@ -45,7 +45,7 @@ const loadComments = async (cursor = null) => {
 
         const {comments, next_cursor, has_next} = response.data;
 
-        nextCrusor = next_cursor;
+        nextCursor = next_cursor;
         hasNext = has_next;
         renderComments(comments || [], cursor);
     } else {
@@ -64,7 +64,7 @@ const handleScroll = () => {
 
     // 하단에서 300px 이내에 도달하면 로드
     if (scrollTop + windowHeight >= documentHeight - 300) {
-        loadComments(nextCrusor)
+        loadComments(nextCursor)
     }
 };
 
@@ -76,7 +76,7 @@ const renderPostDetail = (post) => {
     document.querySelector('.post-date').textContent = getDate(post.created_at);
     document.querySelector('.post-content p').textContent = post.content;
 
-    if (post.images.length === 0){
+    if (post.images.length === 0) {
         document.querySelector(".post-image").style.display = "none";
     }
 
@@ -108,8 +108,30 @@ const renderComments = (comments, cursor = null) => {
 
 };
 
-document.querySelector("#edit-btn").addEventListener("click",()=>{
-    window.location.href = `${PAGE.POST_MODIFY_PAGE}?postId=${postId}`;
+document.querySelector("#edit-btn").addEventListener("click", () => {
+    window.location.replace(`${PAGE.POST_MODIFY_PAGE}?postId=${postId}`);
+})
+
+document.querySelector("#remove-btn").addEventListener("click", () => {
+    showDialog("삭제하시겠습니까?", async () => {
+        try {
+            const response = await deleteRequest(`${API.POST}/${postId}`);
+
+            if (response) {
+                // TODO : alert 토스트 형식으로 변경하기
+                alert("게시글이 삭제 되었습니다.");
+                window.location.replace(`${PAGE.POST_LIST_PAGE}`)
+            } else {
+                // TODO : alert 토스트 형식으로 변경하기
+                alert("게시글 삭제에 실패했습니다. 다시 시도해주세요.");
+            }
+        } catch (error) {
+            console.error("게시글 삭제 오류 발생 : ", error)
+            alert("게시글 삭제 중 오류 발생");
+        }
+
+
+    });
 })
 
 

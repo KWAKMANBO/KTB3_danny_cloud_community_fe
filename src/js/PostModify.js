@@ -66,6 +66,7 @@ titleInput.addEventListener('input', () => {
     }
     if (hasSameTitleAndContent) {
         clearError(contentInput, contentHelperText)
+        showLength(contentInput.value, contentHelperText, CONTENT_MAX);
     }
 });
 
@@ -76,6 +77,7 @@ contentInput.addEventListener('input', () => {
     }
     if (hasSameTitleAndContent) {
         clearError(titleInput, titleHelperText);
+        showLength(titleInput.value, titleHelperText, TITLE_MAX);
     }
 });
 
@@ -127,7 +129,7 @@ submitButton.addEventListener('click', async (e) => {
         if (response) {
             // TODO : alert 토스트 형식으로 변경하기
             alert('게시글이 수정되었습니다.');
-            window.location.href = `${PAGE.POST_DETAIL}/${postId}`;
+            window.location.replace(`${PAGE.POST_DETAIL}/${postId}`);
         } else {
             // TODO : alert 토스트 형식으로 변경하기
             alert('게시글 수정에 실패했습니다. 다시 시도해주세요.');
@@ -143,3 +145,7 @@ submitButton.addEventListener('click', async (e) => {
 window.addEventListener('load', async () => {
     await loadPostData();
 });
+
+window.addEventListener("popstate", () =>{
+    window.location.replace(PAGE.POST_LIST_PAGE);
+})
