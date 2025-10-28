@@ -39,10 +39,25 @@ label {
 }
 
 .helper-text {
-    margin-top: -4px;
+    margin-top: 4px;
     margin-bottom: 8px;
     font-size: 12px;
     color: #999;
+}
+
+.helper-text.error {
+    visibility: visible;
+    color: #e74c3c;
+}
+
+input[type="text"].error,
+textarea.error {
+    border-color: #e74c3c;
+}
+
+input[type="text"].error:focus,
+textarea.error:focus {
+    border-color: #e74c3c;
 }
 
 input[type="text"] {

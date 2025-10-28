@@ -22,7 +22,6 @@ const loadPostDetail = async () => {
     const response = await get(`${API.POST}/${postId}`, {});
 
     if (response && response.data) {
-        console.log(response.data)
         renderPostDetail(response.data);
         // 댓글 목록 로드
         await loadComments();
