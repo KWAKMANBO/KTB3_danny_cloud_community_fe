@@ -1,5 +1,5 @@
-import {post} from './RequestConst.js';
-import {API, PAGE} from './const/ConstUrl.js';
+import {post} from './const/RequestConst.js';
+import {API, PAGE} from './const/const.js';
 
 const loginButton = document.querySelector('.login-btn');
 loginButton.addEventListener('click', async () => {

@@ -1,6 +1,6 @@
 import {postComponent} from "../page/component/post/PostComponent.js";
-import {get} from "./RequestConst.js";
-import {API, PAGE} from './const/ConstUrl.js';
+import {get} from "./const/RequestConst.js";
+import {API, PAGE} from './const/const.js';
 
 const writeButton  = document.querySelector(".write-post-btn");
 writeButton.addEventListener('click', ()=>{

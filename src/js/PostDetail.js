@@ -1,7 +1,7 @@
-import {get} from './RequestConst.js';
+import {get} from './const/RequestConst.js';
 import {commentComponent} from '../page/component/post/CommentComponent.js';
 import {getDate} from "./Common.js";
-import {API, PAGE} from './const/ConstUrl.js';
+import {API, PAGE} from './const/const.js';
 
 const postId = window.location.pathname.split('/')[2];
 let nextCrusor = null;
@@ -22,6 +22,7 @@ const loadPostDetail = async () => {
     const response = await get(`${API.POST}/${postId}`, {});
 
     if (response && response.data) {
+        console.log(response.data);
         renderPostDetail(response.data);
         // 댓글 목록 로드
         await loadComments();
@@ -75,6 +76,10 @@ const renderPostDetail = (post) => {
     document.querySelector('.post-date').textContent = getDate(post.created_at);
     document.querySelector('.post-content p').textContent = post.content;
 
+    if (post.images.length === 0){
+        document.querySelector(".post-image").style.display = "none";
+    }
+
     if (!post.is_mine) document.querySelector('.post-actions').style.display = "none";
 
     const statNumbers = document.querySelectorAll('.stat-number');
@@ -102,6 +107,11 @@ const renderComments = (comments, cursor = null) => {
 
 
 };
+
+document.querySelector("#edit-btn").addEventListener("click",()=>{
+    window.location.href = `${PAGE.POST_MODIFY_PAGE}?postId=${postId}`;
+})
+
 
 window.addEventListener('scroll', handleScroll);
 

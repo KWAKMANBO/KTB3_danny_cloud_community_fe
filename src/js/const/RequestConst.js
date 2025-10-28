@@ -64,3 +64,30 @@ export const get = async (url, params = {}) => {
     }
 }
 
+export const patch = async (url, data) => {
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+        }
+
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+
+        const response = await fetch(url, {
+            method: METHOD.PATCH,
+            credentials: "include",
+            headers: headers,
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("PATCH 요청 실패:", error);
+        return null;
+    }
+}

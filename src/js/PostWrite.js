@@ -1,5 +1,5 @@
-import {post} from "./RequestConst.js";
-import {API, PAGE} from "./const/ConstUrl.js";
+import {post} from "./const/RequestConst.js";
+import {API, PAGE, TITLE_MAX, CONTENT_MAX} from "./const/const.js";
 
 const submitButton = document.querySelector(".submit-btn");
 const titleInput = document.querySelector("#title");
@@ -7,8 +7,7 @@ const contentInput = document.querySelector("#content");
 const titleHelperText = document.querySelector("#title").nextElementSibling;
 const contentHelperText = document.querySelector("#content").nextElementSibling;
 
-const TITLE_MAX = 30;
-const CONTENT_MAX = 2000;
+
 
 // 에러 상태 제거 함수
 const clearError = (input, helperText) => {
