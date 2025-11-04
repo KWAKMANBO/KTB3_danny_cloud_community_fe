@@ -4,6 +4,9 @@ export const API = {
     SIGNUP: "http://localhost:8080/auth",
     TERM: "http://localhost:8080/auth/consent",
     POST: "http://localhost:8080/posts",
+    USERS_ME: "http://localhost:8080/users/me",
+    NICKNAME: "http://localhost:8080/users/nickname",
+    PASSWORD: "http://localhost:8080/users/password"
 }
 
 export const PAGE = {
