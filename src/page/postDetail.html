@@ -59,8 +59,11 @@
 
         <!-- 댓글 입력 -->
         <div class="comment-write">
-            <textarea id="comment-input" placeholder="댓글을 남겨주세요!"></textarea>
-            <button class="comment-submit-btn">댓글 등록</button>
+            <textarea id="comment-input" placeholder="댓글을 남겨주세요!" maxlength="200"></textarea>
+            <div class="comment-actions">
+                <span class="char-count"><span id="current-count">0</span>/200</span>
+                <button class="comment-submit-btn">댓글 등록</button>
+            </div>
         </div>
 
         <!-- 댓글 목록 -->

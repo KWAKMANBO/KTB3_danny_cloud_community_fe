@@ -170,9 +170,18 @@ main {
     color: #999;
 }
 
+.comment-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.char-count {
+    font-size: 13px;
+    color: #666;
+}
+
 .comment-submit-btn {
-    display: block;
-    margin-left: auto;
     padding: 10px 28px;
     background-color: #aca0eb;
     color: white;
