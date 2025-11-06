@@ -1,4 +1,4 @@
-import {getDate} from "../../../js/Common.js";
+import {getDate} from "../../../js/common.js";
 
 export const postComponent = (data) => {
     return `<article class="post-card" data-post-id="${data.id}">

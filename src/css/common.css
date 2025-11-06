@@ -1,0 +1,10 @@
+* {
+    background-color: #F4F5F7;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+}

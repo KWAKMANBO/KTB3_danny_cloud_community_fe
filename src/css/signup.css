@@ -1,0 +1,166 @@
+
+h1 {
+    font-size: 18px;
+    color: #333;
+    font-weight: 400;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+    overflow-y: auto;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#signup-form {
+    border-radius: 4px;
+    padding: 30px 24px;
+    margin-bottom: 12px;
+}
+
+.profile-section {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.profile-section > label {
+    display: block;
+    text-align: left;
+    margin-bottom: 4px;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.profile-upload {
+    margin-top: 15px;
+}
+
+.profile-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #d0d0d0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.profile-circle:hover {
+    background-color: #c0c0c0;
+}
+
+.plus-icon {
+    font-size: 40px;
+    background-color: transparent;
+    color: #fff;
+    font-weight: 300;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 13px;
+    /*background-color: #fff;*/
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+.helper-text {
+    margin-top: 4px;
+    font-size: 11px;
+    color: red;
+    visibility: hidden;
+}
+
+.signup-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #aca0eb;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.signup-submit-btn:hover {
+    background-color: #7e6aee;
+}
+
+.login-link-btn {
+    border: transparent;
+    width: 100%;
+    padding: 5px;
+    background-color: transparent;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.login-link-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.term-btn {
+    border: transparent;
+    width: 100%;
+    padding: 5px;
+    background-color: transparent;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.term-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}

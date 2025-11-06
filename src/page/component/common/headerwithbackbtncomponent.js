@@ -1,5 +1,5 @@
 import {API, PAGE} from "../../../js/const/const.js";
-import {post} from "../../../js/const/RequestConst.js";
+import {post} from "../../../js/const/requestconst.js";
 
 const header = document.querySelector('header');
 
