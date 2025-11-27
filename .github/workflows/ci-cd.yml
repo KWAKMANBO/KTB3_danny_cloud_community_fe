@@ -47,7 +47,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-east-1
 #
 #
 #      - name: Login to Amazon ECR
@@ -66,6 +66,13 @@ jobs:
 #          pwd
 #          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
 #          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
       - name: Install AWS CLI if not installed
         run: |
           if ! command -v aws &> /dev/null
