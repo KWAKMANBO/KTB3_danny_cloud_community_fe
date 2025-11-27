@@ -1,5 +1,6 @@
 import {post} from './const/requestconst.js';
 import {API, PAGE} from './const/const.js';
+import {validateEmail, validatePassword, validateNickname} from './utils/validators.js';
 
 const backButton = document.querySelector(".back-btn");
 
@@ -20,22 +21,7 @@ termButton.addEventListener('click', () => {
     window.location.href = API.TERM;
 })
 
-// 유효성 검사 함수들
-const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-const validatePassword = (password) => {
-    // 최소 8자, 영문, 숫자, 특수문자 포함
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    return passwordRegex.test(password);
-}
-
-const validateNickname = (nickname) => {
-    // 최소 2자 이상
-    return nickname.trim().length >= 2;
-}
+// 유효성 검사 함수들은 utils/validators.js로 이동
 
 // helper text 표시 함수
 const showHelperText = (inputId, message, isError = true) => {
