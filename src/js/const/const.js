@@ -1,4 +1,4 @@
-const serverUrl =  "http://3.38.211.7";
+const serverUrl =  "https://kwakmanbo.store";
 
 export const API = {
     LOGIN: `${serverUrl}/api/auth/login`,
