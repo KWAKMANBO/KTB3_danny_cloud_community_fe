@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-          node-version: [ 24.x ]
-#        node-version: [ 19.x,20.x,22.x,24.x ]
+        node-version: [ 24.x ]
+    #        node-version: [ 19.x,20.x,22.x,24.x ]
 
     steps:
       - uses: actions/checkout@v5
@@ -39,34 +39,34 @@ jobs:
 
 
     steps:
-#      - name: Get fe Enviorment
-#        uses: actions/checkout@v5
-#
-      - name: Configure AWS Credentials
+      #      - name: Get fe Enviorment
+      #        uses: actions/checkout@v5
+      #
+      - name: Configure AWS Credentials For build
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: us-east-1
-#
-#
-#      - name: Login to Amazon ECR
-#        id: login-ecr
-#        uses: aws-actions/amazon-ecr-login@v2
-#        with:
-#          registry-type: public
-#
-#      - name: Build, tag and push image to Aamazon ECR Public Registry
-#        id: build-image
-#        env:
-#          REGISTRY: public.ecr.aws/${{ secrets.AWS_REPOSITORY_ALIAS }}
-#          REPOSITORY: ${{ secrets.AWS_REPOSITORY }}
-#          IMAGE_TAG: ${{ github.sha }}
-#        run: |
-#          pwd
-#          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-#          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-      - name: Configure AWS Credentials
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
+
+      - name: Build, tag and push image to Aamazon ECR Public Registry
+        id: build-image
+        env:
+          REGISTRY: public.ecr.aws/${{ secrets.AWS_REPOSITORY_ALIAS }}
+          REPOSITORY: ${{ secrets.AWS_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          pwd
+          docker build -t $REGISTRY/$REPOSITORY:latest .
+          docker push $REGISTRY/$REPOSITORY:latest
+
+      - name: Configure AWS Credentials For Deploy
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
@@ -89,4 +89,5 @@ jobs:
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
-            --parameters commands='["cd /home","mkdir hello_world"]'
+            --parameters "{\"commands\": [\"cd /home\", \"bash /home/deploy.sh ${{ secrets.AWS_REPOSITORY_ALIAS }} ${{ secrets.AWS_REPOSITORY }} latest\"]}" \
+            --region ap-northeast-2
