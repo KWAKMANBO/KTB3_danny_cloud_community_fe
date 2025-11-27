@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  fe-build:
+  fe-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -18,8 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-        with:
-          submodules: recursive
+
 
       - name: Set up Node Enviornment
         uses: actions/setup-node@v2
@@ -33,11 +32,17 @@ jobs:
         run: npm test
 
   build-and-push-image-to-ecr:
-    needs: fe-build
+    needs: fe-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
+
+
+
     steps:
+      - name: Get fe Enviorment
+        uses: actions/checkout@v5
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -59,8 +64,7 @@ jobs:
           REPOSITORY: community/fe
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          ls -al
-          cd KTB3_danny_cloud_community_fe
+          pwd
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
