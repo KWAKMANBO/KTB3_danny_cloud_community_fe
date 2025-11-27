@@ -58,7 +58,7 @@ jobs:
           REPOSITORY: community/fe
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd KTB3_danny_cloud_cloud_community_fe
+          cd KTB3_danny_cloud_community_fe
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
