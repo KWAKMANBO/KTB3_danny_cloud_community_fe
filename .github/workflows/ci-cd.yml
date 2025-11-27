@@ -37,8 +37,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
 
-
-
     steps:
       - name: Get fe Enviorment
         uses: actions/checkout@v5
@@ -57,17 +55,21 @@ jobs:
         with:
           registry-type: public
 
+      - name: Debug registry
+        run: |
+          echo "REGISTRY: ${{ steps.login-ecr.outputs.registry }}"
+
       - name: Build, tag and push image to Aamazon ECR Public Registry
         id: build-image
         env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: community/fe
+          REGISTRY: public.ecr.aws/${{ secrets.AWS_REPOSITORY_ALIAS }}
+          REPOSITORY: ${{ secrets.AWS_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
           pwd
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-
+    
 
 
