@@ -80,6 +80,6 @@ jobs:
       - name: Deploy FE EC2 via SSM
         run: |
           aws ssm send-command \
-            --document-name "AWS-mkfile" \
+            --document-name "AWS-RunShellScript" \
             --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
             --parameters commands='["cd /home","mkdir hello_world"]'
