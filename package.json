@@ -1,5 +1,14 @@
 {
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.14"
   }
 }
