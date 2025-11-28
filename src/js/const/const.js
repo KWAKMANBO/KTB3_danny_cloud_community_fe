@@ -1,5 +1,6 @@
 const serverUrl =  "https://kwakmanbo.store";
 
+
 export const API = {
     LOGIN: `${serverUrl}/api/auth/login`,
     LOGOUT: `${serverUrl}/api/auth/logout`,
