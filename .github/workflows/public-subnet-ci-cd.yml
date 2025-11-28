@@ -1,12 +1,7 @@
 name: Kwakmanbo Community CI
 on:
-#  push:
-#    branches:
-#      # main 브랜치에서 push가 발생하면
-#      - main
   pull_request:
     branches:
-      # main 브랜치에 PR이 발생하면
       - main
 
 jobs:
@@ -14,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-            node-version: [ 19.x,20.x,22.x,24.x ]
+        node-version: [ 19.x,20.x,22.x,24.x ]
 
     steps:
       - uses: actions/checkout@v5
-
 
       - name: Set up Node Enviornment
         uses: actions/setup-node@v2
@@ -35,7 +29,6 @@ jobs:
     needs: fe-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-
 
     steps:
       - name: Get fe Enviorment
@@ -61,36 +54,15 @@ jobs:
           REPOSITORY: ${{ secrets.AWS_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          pwd
           docker build -t $REGISTRY/$REPOSITORY:latest .
           docker push $REGISTRY/$REPOSITORY:latest
 
-      - name: Configure AWS Credentials For Deploy
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.2.0
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ap-northeast-2
-
-      - name: Install AWS CLI if not installed
-        run: |
-          if ! command -v aws &> /dev/null
-          then
-            echo "AWS CLI not found. Installing..."
-            sudo apt-get update
-            sudo apt-get install -y awscli
-          else
-            echo "AWS CLI already installed."
-          fi
-
-      - name: Install jq if not installed
-        run: |
-          if ! command -v jq
-
-      - name: Deploy FE EC2 via SSM
-        run: |
-          aws ssm send-command \
-            --document-name "AWS-RunShellScript" \
-            --instance-ids ${{ secrets.AWS_INSTANCE_ID }} \
-            --parameters "{\"commands\": [\"cd /home\", \"bash /home/deploy.sh ${{ secrets.AWS_REPOSITORY_ALIAS }} ${{ secrets.AWS_REPOSITORY }} latest\"]}" \
-            --region ap-northeast-2
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu
+            bash /home/ubuntu/deploy.sh ${{ secrets.AWS_REPOSITORY_ALIAS }} ${{ secrets.AWS_REPOSITORY }} latest
