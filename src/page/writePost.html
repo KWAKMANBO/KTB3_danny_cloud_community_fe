@@ -43,13 +43,14 @@
         <div class="form-group">
             <label for="image">이미지</label>
             <div class="image-upload-area">
-                <input type="file" id="image" name="image" accept="image/*" hidden>
+                <input type="file" id="image" name="image" accept="image/*" multiple hidden>
                 <label for="image" class="image-upload-btn">
                     파일 선택
                 </label>
                 <span class="file-info">파일을 선택하지 않음.</span>
             </div>
-            <p class="helper-text">* helper text</p>
+            <div id="image-preview" class="image-preview"></div>
+            <p class="helper-text">* 최대 5개까지 업로드 가능합니다.</p>
         </div>
 
         <button type="submit" class="submit-btn">완료</button>

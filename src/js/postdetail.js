@@ -79,8 +79,23 @@ const renderPostDetail = (post) => {
     document.querySelector('.post-date').textContent = getDate(post.created_at);
     document.querySelector('.post-content p').textContent = post.content;
 
-    if (post.images.length === 0) {
-        document.querySelector(".post-image").style.display = "none";
+    // 작성자 프로필 이미지 렌더링
+    const authorProfileElement = document.querySelector('.author-profile');
+    if (post.authorProfileImageUrl && authorProfileElement) {
+        authorProfileElement.style.backgroundImage = `url(${post.authorProfileImageUrl})`;
+        authorProfileElement.style.backgroundSize = 'cover';
+        authorProfileElement.style.backgroundPosition = 'center';
+    }
+
+    // 이미지 렌더링
+    const postImageContainer = document.querySelector(".post-image");
+    if (post.images && post.images.length > 0) {
+        postImageContainer.style.display = "block";
+        postImageContainer.innerHTML = post.images.map(imageUrl =>
+            `<img src="${imageUrl}" alt="게시글 이미지" class="post-image-item">`
+        ).join('');
+    } else {
+        postImageContainer.style.display = "none";
     }
 
     if (!post.is_mine) document.querySelector('.post-actions').style.display = "none";
@@ -89,6 +104,59 @@ const renderPostDetail = (post) => {
     statNumbers[0].textContent = post.likes;
     statNumbers[1].textContent = post.views;
     statNumbers[2].textContent = post.comments;
+
+    // 좋아요 버튼 상태 업데이트
+    updateLikeButton(post.is_liked);
+};
+
+// 좋아요 버튼 상태 업데이트
+const updateLikeButton = (isLiked) => {
+    const likeBtn = document.querySelector('#like-btn');
+    const likeIcon = document.querySelector('.like-icon');
+    const likeText = document.querySelector('.like-text');
+
+    if (isLiked) {
+        likeBtn.classList.add('liked');
+        likeIcon.textContent = '♥';
+        likeText.textContent = '좋아요';
+    } else {
+        likeBtn.classList.remove('liked');
+        likeIcon.textContent = '♡';
+        likeText.textContent = '좋아요';
+    }
+};
+
+// 좋아요 토글 함수
+const toggleLike = async () => {
+    const likeBtn = document.querySelector('#like-btn');
+    const isLiked = likeBtn.classList.contains('liked');
+
+    try {
+        console.log(isLiked)
+        let response;
+        if (isLiked) {
+            // 좋아요 취소
+            response = await deleteRequest(API.POST_LIKE(postId));
+        } else {
+            // 좋아요 추가
+            response = await post(API.POST_LIKE(postId), {});
+        }
+
+        if (response && response.data) {
+            // 좋아요 상태 업데이트
+            updateLikeButton(response.data.is_liked);
+
+            // 좋아요 수 업데이트
+            // const statNumbers = document.querySelectorAll('.stat-number');
+            // const currentLikes = parseInt(statNumbers[0].textContent);
+            // statNumbers[0].textContent = response.data.is_liked ? currentLikes + 1 : currentLikes - 1;
+        } else {
+            alert('좋아요 처리에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('좋아요 처리 중 오류:', error);
+        alert('좋아요 처리 중 오류가 발생했습니다.');
+    }
 };
 
 // 댓글 목록 렌더링
@@ -211,6 +279,9 @@ commentInput.addEventListener('keydown', (e) => {
         submitComment();
     }
 });
+
+// 좋아요 버튼 클릭 이벤트
+document.querySelector('#like-btn').addEventListener('click', toggleLike);
 
 window.addEventListener('scroll', handleScroll);
 

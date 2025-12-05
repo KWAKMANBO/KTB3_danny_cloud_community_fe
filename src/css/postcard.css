@@ -35,6 +35,43 @@
     color: #666;
 }
 
+.post-like-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.post-like-btn:hover {
+    background-color: #f9f9f9;
+    border-color: #aca0eb;
+}
+
+.post-like-btn.liked {
+    background-color: #ffe6e6;
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+}
+
+.post-like-btn.liked .like-icon {
+    color: #ff0000;
+}
+
+.post-like-btn .like-icon {
+    font-size: 14px;
+}
+
+.post-like-btn .like-count {
+    font-weight: 600;
+}
+
 .post-date {
     font-size: 12px;
     color: #999;

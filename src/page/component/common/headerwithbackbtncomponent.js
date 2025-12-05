@@ -1,5 +1,5 @@
 import {API, PAGE} from "../../../js/const/const.js";
-import {post} from "../../../js/const/requestconst.js";
+import {post, get} from "../../../js/const/requestconst.js";
 
 const header = document.querySelector('header');
 
@@ -7,7 +7,7 @@ const header = document.querySelector('header');
 const accessToken = localStorage.getItem('accessToken');
 const profileHTML = accessToken ? `
     <div class="profile-container">
-        <div class="profile-thumbnail"></div>
+        <div class="profile-thumbnail" id="header-profile-thumbnail"></div>
         <div class="profile-dropdown">
             <div class="dropdown-item" data-action="edit-profile">회원 정보수정</div>
             <div class="dropdown-item" data-action="change-password">비밀번호수정</div>
@@ -21,6 +21,28 @@ header.innerHTML = `
     <h1>아무 말 대잔치</h1>
     ${profileHTML}
 `;
+
+// 프로필 이미지 로드
+const loadProfileImage = async () => {
+    if (!accessToken) return;
+
+    try {
+        const response = await get(API.USERS_ME);
+        if (response && response.data && response.data.profileImageUrl) {
+            const profileThumbnail = document.getElementById('header-profile-thumbnail');
+            if (profileThumbnail) {
+                profileThumbnail.style.backgroundImage = `url(${response.data.profileImageUrl})`;
+                profileThumbnail.style.backgroundSize = 'cover';
+                profileThumbnail.style.backgroundPosition = 'center';
+            }
+        }
+    } catch (error) {
+        console.error('프로필 이미지 로드 실패:', error);
+    }
+};
+
+// 프로필 이미지 로드 실행
+loadProfileImage();
 
 // < 뒤로가기 버튼을 계산
 function positionBackButton() {

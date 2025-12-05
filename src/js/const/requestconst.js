@@ -126,3 +126,25 @@ export const deleteRequest = async (url, params = {}) => {
         return null;
     }
 }
+
+// S3에 이미지 업로드하기 위한 PUT 요청 (Presigned URL 사용)
+export const putImage = async (presignedUrl, file, contentType) => {
+    try {
+        const response = await fetch(presignedUrl, {
+            method: METHOD.PUT,
+            headers: {
+                "Content-Type": contentType
+            },
+            body: file
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return { success: true };
+    } catch (error) {
+        console.error("이미지 업로드 실패:", error);
+        return null;
+    }
+}

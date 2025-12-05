@@ -1,5 +1,5 @@
 import {postComponent} from "../page/component/post/postcomponent.js";
-import {get} from "./const/requestconst.js";
+import {get, post, deleteRequest} from "./const/requestconst.js";
 import {API, PAGE} from './const/const.js';
 import {requireAuth} from './common.js';
 
@@ -27,7 +27,7 @@ const loadPosts = async (cursor = null) => {
 
     const params = cursor ? {cursor} : {};
     const response = await get(API.POST, params);
-
+    console.log(response.data)
     if (response && response.data) {
         const {posts, next_cursor, has_next} = response.data;
         // 각 게시물을 postComponent로 변환하여 HTML 생성
@@ -66,8 +66,54 @@ const handleScroll = () => {
     }
 };
 
+// 좋아요 토글 함수
+const toggleLike = async (postId, likeBtn) => {
+    const isLiked = likeBtn.classList.contains('liked');
+
+    try {
+        let response;
+        if (isLiked) {
+            // 좋아요 취소
+            response = await deleteRequest(API.POST_LIKE(postId));
+        } else {
+            // 좋아요 추가
+            response = await post(API.POST_LIKE(postId), {});
+        }
+
+        if (response && response.data) {
+            // 좋아요 상태 업데이트
+            const likeIcon = likeBtn.querySelector('.like-icon');
+            const likeCount = likeBtn.querySelector('.like-count');
+
+            if (response.data.is_liked) {
+                likeBtn.classList.add('liked');
+                likeIcon.textContent = '♥';
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+            } else {
+                likeBtn.classList.remove('liked');
+                likeIcon.textContent = '♡';
+                likeCount.textContent = parseInt(likeCount.textContent) - 1;
+            }
+        } else {
+            alert('좋아요 처리에 실패했습니다.');
+        }
+    } catch (error) {
+        console.error('좋아요 처리 중 오류:', error);
+        alert('좋아요 처리 중 오류가 발생했습니다.');
+    }
+};
+
 // 게시물 클릭 이벤트 (이벤트 위임)
 postList.addEventListener('click', (e) => {
+    // 좋아요 버튼 클릭 처리
+    const likeBtn = e.target.closest('.post-like-btn');
+    if (likeBtn) {
+        e.stopPropagation();
+        const postId = likeBtn.dataset.postId;
+        toggleLike(postId, likeBtn);
+        return;
+    }
+
     // 클릭된 요소가 post-card 또는 그 자식 요소인지 확인
     const postCard = e.target.closest('.post-card');
     console.log(postCard)
