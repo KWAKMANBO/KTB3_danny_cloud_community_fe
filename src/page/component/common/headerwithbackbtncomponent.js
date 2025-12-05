@@ -18,7 +18,9 @@ const profileHTML = accessToken ? `
 
 header.innerHTML = `
     <button class="back-btn""><</button>
-    <h1>아무 말 대잔치</h1>
+    <h1>
+    <img src="asset/images/logo.png"> 
+    </h1>
     ${profileHTML}
 `;
 
@@ -46,7 +48,7 @@ loadProfileImage();
 
 // < 뒤로가기 버튼을 계산
 function positionBackButton() {
-    const h1 = header.querySelector('h1');
+    const h1 = header.querySelector('img');
     const backBtn = header.querySelector('.back-btn');
 
     if (!h1 || !backBtn) return;
@@ -57,12 +59,22 @@ function positionBackButton() {
 
     // h1의 왼쪽 끝 위치를 계산
     const h1LeftPosition = h1Rect.left - headerRect.left;
-    // 뒤로가기 버튼을 아무 말 대잔치 옆으로 계산
-    backBtn.style.left = `${h1LeftPosition - backBtn.offsetWidth - 5}px`;
+    // 뒤로가기 버튼을 로고 왼쪽에 적절한 간격으로 배치
+    backBtn.style.left = `${h1LeftPosition - backBtn.offsetWidth - 10}px`;
 }
 
 
-positionBackButton();
+// 이미지 로드 완료 후 뒤로가기 버튼 위치 계산
+const logoImg = header.querySelector('img');
+if (logoImg) {
+    if (logoImg.complete) {
+        // 이미지가 이미 로드된 경우
+        positionBackButton();
+    } else {
+        // 이미지 로드 대기
+        logoImg.addEventListener('load', positionBackButton);
+    }
+}
 
 // 화면 크기 변경 시 재계산
 window.addEventListener('resize', positionBackButton);
