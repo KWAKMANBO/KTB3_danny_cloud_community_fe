@@ -19,7 +19,7 @@ const profileHTML = accessToken ? `
 header.innerHTML = `
     <button class="back-btn""><</button>
     <h1>
-    <img src="asset/images/logo.png"> 
+    <img src="/asset/images/logo.png">
     </h1>
     ${profileHTML}
 `;
