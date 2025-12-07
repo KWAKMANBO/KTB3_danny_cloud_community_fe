@@ -1,6 +1,4 @@
-// const serverUrl =  "https://kwakmanbo.store";
-const serverUrl =  "http://localhost:8080";
-
+const serverUrl =  "https://kwakmanbo.store";
 
 export const API = {
     LOGIN: `${serverUrl}/api/auth/login`,
