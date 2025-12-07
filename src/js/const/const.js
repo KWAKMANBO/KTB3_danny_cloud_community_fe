@@ -1,5 +1,5 @@
 const serverUrl =  "https://kwakmanbo.store";
-
+const wsUrl =  "https://kwakmanbo.store";
 export const API = {
     LOGIN: `${serverUrl}/api/auth/login`,
     LOGOUT: `${serverUrl}/api/auth/logout`,
@@ -14,7 +14,7 @@ export const API = {
     // 좋아요 API - 동적 URL은 `${API.POST}/${postId}/likes` 형태로 사용
     POST_LIKE: (postId) => `${serverUrl}/api/posts/${postId}/likes`
 }
-const wsUrl =  "https://kwakmanbo.store";
+
 
 export const PAGE = {
     LOGIN_PAGE: `${wsUrl}/`,
