@@ -1,4 +1,4 @@
-import {deleteRequest, get, post} from './const/requestconst.js';
+import {deleteRequest, get, post, patch} from './const/requestconst.js';
 import {commentComponent} from '../page/component/post/commentcomponent.js';
 import {getDate, requireAuth} from "./common.js";
 import {API, PAGE} from './const/const.js';
@@ -11,6 +11,7 @@ const postId = window.location.pathname.split('/')[2];
 let nextCursor = null;
 let hasNext = true;
 let isLoading = false;
+let isSubmittingComment = false;
 
 const backButton = document.querySelector(".back-btn")
 backButton.addEventListener('click', () => {
@@ -234,6 +235,11 @@ commentInput.addEventListener('input', () => {
 
 // 댓글 작성
 const submitComment = async () => {
+    // 이미 제출 중이면 무시
+    if (isSubmittingComment) {
+        return;
+    }
+
     const content = commentInput.value.trim();
 
     if (!content) {
@@ -243,6 +249,8 @@ const submitComment = async () => {
     if (content.length > 200) {
         return;
     }
+
+    isSubmittingComment = true;
 
     try {
         const response = await post(`${API.POST}/${postId}/comments`, {
@@ -266,6 +274,8 @@ const submitComment = async () => {
     } catch (error) {
         console.error('댓글 등록 오류:', error);
         alert('댓글 등록 중 오류가 발생했습니다.');
+    } finally {
+        isSubmittingComment = false;
     }
 };
 
