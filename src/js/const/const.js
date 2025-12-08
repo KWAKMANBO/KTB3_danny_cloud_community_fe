@@ -11,8 +11,9 @@ export const API = {
     PASSWORD: `${serverUrl}/api/users/password`,
     IMAGE_UPLOAD_URL: `${serverUrl}/api/images/upload-url`,
     PROFILE_IMAGE: `${serverUrl}/api/users/profile-image`,
-    // 좋아요 API - 동적 URL은 `${API.POST}/${postId}/likes` 형태로 사용
-    POST_LIKE: (postId) => `${serverUrl}/api/posts/${postId}/likes`
+    POST_LIKE: (postId) => `${serverUrl}/api/posts/${postId}/likes`,
+    COMMENT_DELETE: (commentId) => `${serverUrl}/api/posts/comments/${commentId}`,
+    COMMENT_UPDATE: (postId) =>`${serverUrl}/api/posts/${postId}/comments`,
 }
 
 

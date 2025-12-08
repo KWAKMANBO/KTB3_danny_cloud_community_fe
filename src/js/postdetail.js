@@ -283,6 +283,121 @@ commentInput.addEventListener('keydown', (e) => {
 // 좋아요 버튼 클릭 이벤트
 document.querySelector('#like-btn').addEventListener('click', toggleLike);
 
+// 댓글 수정 모드 진입
+const enterEditMode = (commentItem) => {
+    const commentContent = commentItem.querySelector('.comment-content');
+    const commentActions = commentItem.querySelector('.comment-actions');
+    const originalContent = commentContent.textContent;
+
+
+    commentItem.dataset.originalContent = originalContent;
+
+    commentContent.innerHTML = `
+        <textarea class="comment-edit-textarea" maxlength="200">${originalContent}</textarea>
+        <span class="char-count"><span class="edit-current-count">${originalContent.length}</span>/200</span>
+    `;
+
+
+    const textarea = commentContent.querySelector('.comment-edit-textarea');
+    const charCountSpan = commentContent.querySelector('.edit-current-count');
+    textarea.addEventListener('input', () => {
+        charCountSpan.textContent = textarea.value.length;
+    });
+
+    commentActions.innerHTML = `
+        <button class="action-btn comment-save-btn">저장</button>
+        <button class="action-btn comment-cancel-btn">취소</button>
+    `;
+};
+
+const exitEditMode = (commentItem) => {
+    const commentContent = commentItem.querySelector('.comment-content');
+    const commentActions = commentItem.querySelector('.comment-actions');
+    const originalContent = commentItem.dataset.originalContent;
+
+    commentContent.textContent = originalContent;
+    commentActions.innerHTML = `
+        <button class="action-btn comment-edit-btn">수정</button>
+        <button class="action-btn comment-delete-btn">삭제</button>
+    `;
+
+    delete commentItem.dataset.originalContent;
+};
+
+document.querySelector('.comment-list').addEventListener('click', async (e) => {
+    const commentItem = e.target.closest('.comment-item');
+    if (!commentItem) return;
+
+    if (e.target.classList.contains('comment-edit-btn')) {
+        enterEditMode(commentItem);
+    }
+
+    if (e.target.classList.contains('comment-save-btn')) {
+        const commentId = commentItem.dataset.commentId;
+        const textarea = commentItem.querySelector('.comment-edit-textarea');
+        const newContent = textarea.value.trim();
+
+        if (!newContent) {
+            alert('댓글 내용을 입력해주세요.');
+            return;
+        }
+
+        if (newContent.length > 200) {
+            alert('댓글은 200자 이하로 작성해주세요.');
+            return;
+        }
+
+        try {
+            const response = await patch(API.COMMENT_UPDATE(postId), {
+                comment_id: parseInt(commentId),
+                content: newContent
+            });
+
+            if (response) {
+                alert('댓글이 수정되었습니다.');
+                // 댓글 목록 새로고침
+                nextCursor = null;
+                hasNext = true;
+                await loadComments();
+            } else {
+                alert('댓글 수정에 실패했습니다. 다시 시도해주세요.');
+            }
+        } catch (error) {
+            console.error('댓글 수정 오류:', error);
+            alert('댓글 수정 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 취소 버튼 클릭
+    if (e.target.classList.contains('comment-cancel-btn')) {
+        exitEditMode(commentItem);
+    }
+
+    // 삭제 버튼 클릭
+    if (e.target.classList.contains('comment-delete-btn')) {
+        const commentId = commentItem.dataset.commentId;
+
+        showDialog("댓글을 삭제하시겠습니까?", async () => {
+            try {
+                const response = await deleteRequest(API.COMMENT_DELETE(commentId));
+
+                if (response) {
+                    alert("댓글이 삭제되었습니다.");
+                    // 댓글 목록 새로고침
+                    nextCursor = null;
+                    hasNext = true;
+                    await loadComments();
+                } else {
+                    alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
+                }
+            } catch (error) {
+                console.error("댓글 삭제 오류:", error);
+                alert("댓글 삭제 중 오류가 발생했습니다.");
+            }
+        });
+    }
+});
+
 window.addEventListener('scroll', handleScroll);
 
 window.addEventListener('load', async () => {
