@@ -1,7 +1,7 @@
-const serverUrl = "http://localhost:8080";
-const wsUrl = "http://localhost:3000";
-// const serverUrl =  "https://kwakmanbo.store";
-// const wsUrl =  "https://kwakmanbo.store";
+// const serverUrl = "http://localhost:8080";
+// const wsUrl = "http://localhost:3000";
+const serverUrl =  "https://kwakmanbo.store";
+const wsUrl =  "https://kwakmanbo.store";
 export const API = {
     LOGIN: `${serverUrl}/api/auth/login`,
     LOGOUT: `${serverUrl}/api/auth/logout`,
