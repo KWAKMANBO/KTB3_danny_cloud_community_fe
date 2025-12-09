@@ -1,12 +1,12 @@
 name: Kwakmanbo Community CI
 on:
-#  push:
-#    branches:
-#      # main 브랜치에서 push가 발생하면
-#      - main
+  push:
+    branches:
+      # main 브랜치에서 push가 발생하면
+      - main
   pull_request:
     branches:
-      # main 브랜치에 PR이 발생하면
+       main 브랜치에 PR이 발생하면
       - main
 
 jobs:
