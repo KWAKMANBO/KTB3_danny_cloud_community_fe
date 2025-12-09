@@ -151,6 +151,7 @@ const toggleLike = async () => {
             // const statNumbers = document.querySelectorAll('.stat-number');
             // const currentLikes = parseInt(statNumbers[0].textContent);
             // statNumbers[0].textContent = response.data.is_liked ? currentLikes + 1 : currentLikes - 1;
+            window.location.reload();
         } else {
             alert('좋아요 처리에 실패했습니다.');
         }
@@ -265,7 +266,9 @@ const submitComment = async () => {
             // 댓글 목록 새로고침
             nextCursor = null;
             hasNext = true;
-            await loadComments();
+            window.location.reload();
+            //await loadComments();
+
 
         } else {
             // TODO : toast로 변경하기
